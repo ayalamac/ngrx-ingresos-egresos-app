@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+.navbar.default-layout {
+  background: white;
+}
+.navbar.default-layout .navbar-brand-wrapper {
+  width: auto;
+}
+
+.navbar.default-layout .navbar-menu-wrapper {
+  width: auto;
+  color: black
+}
+
+
+.app-title {
+  padding: 15px 30px;
+}
+
+
+
+.content-wrapper {
+  border-top-left-radius: 30px;
+
+}
