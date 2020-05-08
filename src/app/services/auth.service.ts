@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { map } from 'rxjs/operators';
 import { Usuario } from '../classes/usuario.class';
@@ -12,13 +12,19 @@ import { Usuario } from '../classes/usuario.class';
 })
 export class AuthService {
 
+  userSesionInfo: any;
+  user$: AngularFirestoreDocument<any>;
+
   constructor(public auth: AngularFireAuth,
               public firestore: AngularFirestore) { }
 
   initAuthListener() {
     this.auth.authState.subscribe( (user: firebase.User) => {
-      console.log(user?.email, user?.uid);
-      console.log( user );
+      // console.log(user?.email, user?.uid);
+      this.userSesionInfo = user;
+      // ! Si encuentra usuario autenticado, busca su información en la base de datos.
+      if (user.uid) { this.user$ = this.firestore.doc<any>(`${user.uid}/usuario`); }
+      // console.log('userSesionInfo: ', this.userSesionInfo );
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+
+  user: any;
 
   constructor(private authService: AuthService,
               private router: Router) { }
+
+  ngOnInit() {
+    this.user = this.authService.user;
+  }
 
   cerrarSesion() {
     this.authService.cerrarSesionDeUsuario()
