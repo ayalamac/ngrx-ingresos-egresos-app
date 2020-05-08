@@ -10,14 +10,14 @@
   color: black
 }
 
-
 .app-title {
   padding: 15px 30px;
 }
 
-
-
 .content-wrapper {
   border-top-left-radius: 30px;
+}
 
+.cursor {
+  cursor: pointer;
 }
