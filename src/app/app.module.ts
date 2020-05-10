@@ -1,15 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-// * Modules
-import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+
+// ! Enviroment
+import { environment } from '../environments/environment';
 
 // ! Angular Fire
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+// ! NgRx Store
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers } from './app.reducer';
+
+
+// * Modules
+import { AppRoutingModule } from './app-routing.module';
 
 // * Components
 import { AppComponent } from './app.component';
@@ -42,13 +49,20 @@ import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
     DetalleComponent,
   ],
   imports: [
+
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     // ! Angular Fire
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    // ! NgRx Store
+    StoreModule.forRoot( appReducers ),
+    StoreDevtoolsModule.instrument({
+      maxAge: 30, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

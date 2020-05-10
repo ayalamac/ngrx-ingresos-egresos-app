@@ -9,14 +9,10 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-  user: any;
-
   constructor(private authService: AuthService,
               private router: Router) { }
 
-  ngOnInit() {
-    this.user = this.authService.user;
-  }
+  ngOnInit() {}
 
   cerrarSesion() {
     this.authService.cerrarSesionDeUsuario()

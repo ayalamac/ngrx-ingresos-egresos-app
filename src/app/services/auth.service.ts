@@ -6,25 +6,44 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { map } from 'rxjs/operators';
 import { Usuario } from '../classes/usuario.class';
 
+import { Store } from '@ngrx/store';
+import { AppState } from './../app.reducer';
+import * as authActions from '../auth/auth.actions';
+
+import { FirebaseAuhStateResponse } from './../models/firebase-authState-response.model';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  userSesionInfo: any;
-  user$: AngularFirestoreDocument<any>;
+  userSubscription: Subscription;
+  user: Usuario;
 
   constructor(public auth: AngularFireAuth,
-              public firestore: AngularFirestore) { }
+              private firestore: AngularFirestore,
+              private store: Store<AppState>) { }
 
   initAuthListener() {
-    this.auth.authState.subscribe( (user: firebase.User) => {
+    this.auth.authState.subscribe( (userSesionInfo: firebase.User) => {
       // console.log(user?.email, user?.uid);
-      this.userSesionInfo = user;
-      // ! Si encuentra usuario autenticado, busca su información en la base de datos.
-      if (user.uid) { this.user$ = this.firestore.doc<any>(`${user.uid}/usuario`); }
-      // console.log('userSesionInfo: ', this.userSesionInfo );
+      // ! Si encuentra usuario autenticado, busca su información en la base de datos
+      // ! y la guarda en el State
+      if (userSesionInfo?.uid) {
+        this.userSubscription = this.firestore.doc<Usuario>(`${userSesionInfo.uid}/usuario`)
+                                  .valueChanges().subscribe( firestoreUser => {
+                                    this.user = {...firestoreUser};
+                                    this.store.dispatch( authActions.setUser( { user: this.user } ) );
+                                    // console.log('firestoreUser: ', this.user);
+                                    // console.log(this.store.select('auth').subscribe(userState => console.log('user del State: ', userState.user )));
+                                  });
+      } else {
+        this.store.dispatch( authActions.unsetUser() );
+        this.userSubscription.unsubscribe();
+      }
+
+
     });
   }
 
@@ -46,6 +65,7 @@ export class AuthService {
     return this.auth.signOut();
   }
 
+  // Para el guard
   estaAutenticado() {
     return this.auth.authState.pipe(
       map( user => user !== null)

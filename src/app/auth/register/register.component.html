@@ -2,7 +2,7 @@
   <div class="page-body-wrapper full-page-wrapper auth-page">
     <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
       <div class="row w-100">
-        <div class="col-lg-4 mx-auto">
+        <div class="col col-md-6 col-lg-4  mx-auto">
           <h2 class="text-center mb-4">Registro</h2>
           <div class="auto-form-wrapper">
 
@@ -42,12 +42,19 @@
               </div>
 
               <div class="form-group">
-                <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary submit-btn btn-block">Crear cuenta</button>
+                <button *ngIf="!loading" [disabled]="registerForm.invalid || loading" type="submit" class="btn btn-primary submit-btn btn-block">Crear cuenta</button>
+                <button
+                    *ngIf="loading"
+                    [disabled]="loading"
+                    type="button"
+                    class="btn btn-info submit-btn btn-block">
+                    <i class="fa fa-spin fa-sync"></i> Creando cuenta . . .
+                  </button>
               </div>
               <div class="text-block text-center my-3">
                 <span class="text-small font-weight-semibold">ya tienes una cuenta?</span>
                 <br>
-                <a routerLink="/login" class="text-black text-small">Login</a>
+                <a routerLink="/login" class="text-black text-small">Ingresar</a>
               </div>
             </form>
           </div>
