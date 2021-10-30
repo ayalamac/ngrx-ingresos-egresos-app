@@ -8,14 +8,18 @@
     "activityBarBadge.background": "#00804c",
     "activityBarBadge.foreground": "#e7e7e7",
     "statusBar.background": "#ff9900",
-    "statusBar.border": "#ff9900",
     "statusBar.foreground": "#15202b",
     "statusBarItem.hoverBackground": "#cc7a00",
     "titleBar.activeBackground": "#ff9900",
     "titleBar.activeForeground": "#15202b",
-    "titleBar.border": "#ff9900",
     "titleBar.inactiveBackground": "#ff990099",
-    "titleBar.inactiveForeground": "#15202b99"
+    "titleBar.inactiveForeground": "#15202b99",
+    "editorGroup.border": "#ffad33",
+    "panel.border": "#ffad33",
+    "sash.hoverBorder": "#ffad33",
+    "sideBar.border": "#ffad33",
+    "statusBarItem.remoteBackground": "#ff9900",
+    "statusBarItem.remoteForeground": "#15202b"
   },
   "peacock.color": "#f90",
   "editor.tokenColorCustomizations": {
